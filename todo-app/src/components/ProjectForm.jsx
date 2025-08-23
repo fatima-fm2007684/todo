@@ -6,15 +6,13 @@ export const ProjectForm = ({ addProject }) => {
   const handleSubmit = (e, projectName) => {
     e.preventDefault()
     addProject({ projectName: projectName, isCompleted: false })
-    console.log(`submitted ${projectName}`);
-
+    setProjectName('')
   }
   return (
     <div className='ProjectForm'>
       <form onSubmit={e => handleSubmit(e, projectName)} >
         <input type="text" placeholder='Project Title' value={projectName} onChange={(e) => {
-          setProjectName(e.target.value); console.log(e.target.value);
-
+          setProjectName(e.target.value);
         }} />
         <input type="submit" value="+" ></input>
       </form>
