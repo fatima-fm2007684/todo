@@ -6,13 +6,10 @@ export const ProjectList = () => {
     const addProject = ({ projectName, isCompleted }) => {
         setProjects(prevProjects => [...prevProjects, { projectName, isCompleted, id: Date.now() }])
     }
-    const changeCompleted = (id) => {
+    const switchProjectCompleted = (id) => {
         setProjects(
-            prevProjects => (prevProjects.map(project =>
-                project.id == id ? { ...project, isCompleted: !project.isCompleted } : project
-            ))
+            prevProjects => (prevProjects.map(project => (project.id == id ? { ...project, isCompleted: !project.isCompleted } : project)))
         )
-
     }
     useEffect(() => {
         console.log(JSON.stringify(projects));
@@ -31,7 +28,7 @@ export const ProjectList = () => {
                 return (
                     <ProjectBlock
                         key={index} projectName={e.projectName}
-                        deleteProject={deleteProject} isCompleted={e.isCompleted} id={e.id} changeCompleted={changeCompleted} />
+                        deleteProject={deleteProject} isCompleted={e.isCompleted} id={e.id} switchProjectCompleted={switchProjectCompleted} />
                 )
             })}
         </div>

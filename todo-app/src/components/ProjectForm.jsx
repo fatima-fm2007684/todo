@@ -5,6 +5,7 @@ export const ProjectForm = ({ addProject }) => {
   const [projectName, setProjectName] = useState('')
   const handleSubmit = (e, projectName) => {
     e.preventDefault()
+    if (projectName.trim()=='') return //dont add if empty
     addProject({ projectName: projectName, isCompleted: false })
     setProjectName('')
   }
