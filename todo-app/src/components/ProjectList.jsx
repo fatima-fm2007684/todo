@@ -11,18 +11,13 @@ export const ProjectList = () => {
             prevProjects => (prevProjects.map(project => (project.id == id ? { ...project, isCompleted: !project.isCompleted } : project)))
         )
     }
-    useEffect(() => {
-        console.log(JSON.stringify(projects));
-    }, [projects])
 
     const deleteProject = (id) => {
-        console.log(`before ${JSON.stringify(projects)},${id}`);
         setProjects(prevProjects => prevProjects.filter((e) => e.id != id))
-        console.log(`after ${JSON.stringify(projects)}`);
-        // does above need to be async?
     }
     return (
         <div className='ProjectList'>
+            <h1>Project Tracker</h1>
             <ProjectForm addProject={addProject} />
             {projects.map((e, index) => {
                 return (
