@@ -3,7 +3,7 @@ import { TaskForm } from './TaskForm'
 import { TaskBlock } from './TaskBlock'
 
 
-export const ProjectBlock = ({ id, projectName, isCompleted, deleteProject, switchProjectCompleted }) => {
+export const ProjectBlock = ({ id, projectName, isCompleted, deleteProject, switchProjectCompleted, projectCompleted }) => {
     const [tasks, setTasks] = useState([])
     const addTask = ({ taskName, isCompleted }) => {
         setTasks(prevTasks => [...prevTasks, { taskName, isCompleted, id: Date.now() }])
@@ -18,24 +18,37 @@ export const ProjectBlock = ({ id, projectName, isCompleted, deleteProject, swit
     const deleteTask = (id) => {
         setTasks(prevTasks => prevTasks.filter(e => e.id != id))
     }
+    useEffect(() => {
+        if (tasks.length == 0) return
+        const incompleteTasks = tasks.filter((task) => task.isCompleted == false)
+        if (incompleteTasks.length == 0) {
+            switchProjectCompleted(id, true)
+        }
+        else {
+            switchProjectCompleted(id, false)
+
+        }
+
+    }, [tasks])
+
 
 
     return (
         <div className='ProjectBlock'>
 
             <div className='projectHeader'>
-                <h2>{projectName}</h2>
+                <h2 className={isCompleted ? "completed" : ""}>{projectName}</h2>
                 <div className='actionButtons'>
                     {isCompleted ? (
                         // Checkbox Checkbox Icon
-                        <svg onClick={() => { switchProjectCompleted(id); switchAllTasksCompleted() }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-checkbox">
+                        <svg onClick={() => { switchProjectCompleted(id, !isCompleted); switchAllTasksCompleted() }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-checkbox">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <path d="M9 11l2 3l8 -10" transform="translate(0, 1)" />
                             <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
                         </svg>
                     ) :
                         // Unchecked Checkbox Icon
-                        (<svg onClick={() => { switchProjectCompleted(id); switchAllTasksCompleted() }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-checkbox">
+                        (<svg onClick={() => { switchProjectCompleted(id, !isCompleted); switchAllTasksCompleted() }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-checkbox">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                             <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
                         </svg>)}

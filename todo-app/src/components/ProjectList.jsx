@@ -6,9 +6,9 @@ export const ProjectList = () => {
     const addProject = ({ projectName, isCompleted }) => {
         setProjects(prevProjects => [...prevProjects, { projectName, isCompleted, id: Date.now() }])
     }
-    const switchProjectCompleted = (id) => {
+    const switchProjectCompleted = (id, status) => {
         setProjects(
-            prevProjects => (prevProjects.map(project => (project.id == id ? { ...project, isCompleted: !project.isCompleted } : project)))
+            prevProjects => (prevProjects.map(project => (project.id == id ? { ...project, isCompleted: status } : project)))
         )
     }
 
